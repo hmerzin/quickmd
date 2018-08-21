@@ -1,0 +1,19 @@
+{
+  "name": "quickmd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "highlightjs": "^9.10.0",
+    "ip": "^1.1.5",
+    "markdown-it": "^8.4.2",
+    "marky-markdown": "^12.0.0",
+    "serve-handler": "^4.0.1"
+  }
+}
