@@ -1,11 +1,14 @@
 {
   "name": "quickmd",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "./index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "quickmd": "./index.js"
+  },
+  "preferGlobal": true,
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -14,5 +17,16 @@
     "ip": "^1.1.5",
     "markdown-it": "^8.4.2",
     "serve-handler": "^4.0.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hmerzin/quickmd.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/hmerzin/quickmd/issues"
+  },
+  "homepage": "https://github.com/hmerzin/quickmd#readme",
+  "description": ""
 }
