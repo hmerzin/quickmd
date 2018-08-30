@@ -34,11 +34,14 @@ var md = require('markdown-it')({
   }
 });
 
-var reloadCode = ``;
+var reloadCode = `var ws = new WebSocket('ws://localhost:8080');
+ws.onclose = () => {
+  location.reload();
+};`;
 
 const ghcssHead = `<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="stylesheet.css">
-${argv.watch !== null ? `<script src="./reload.js"></script>` : ''}
+${argv.watch !== null ? `<script>${reloadCode}</script>` : ''}
 <style>
   .markdown-body {
     box-sizing: border-box;
@@ -113,16 +116,16 @@ const writeHTML = (() => {
   );
   addProgress('Creating Stylesheet');
   cssReadStream.pipe(cssWriteStream);
-  if (argv.watch !== null) {
-    const reloadReadStream = fs.createReadStream(
-      path.join(__dirname, 'reload.js')
-    );
-    const reloadWriteStream = fs.createWriteStream(
-      path.join(quickmdPath, 'reload.js')
-    );
-    reloadReadStream.pipe(reloadWriteStream);
-    addProgress('Adding Reload Client Script');
-  }
+  // if (argv.watch !== null) {
+  //   const reloadReadStream = fs.createReadStream(
+  //     path.join(__dirname, 'reload.js')
+  //   );
+  //   const reloadWriteStream = fs.createWriteStream(
+  //     path.join(quickmdPath, 'reload.js')
+  //   );
+  //   reloadReadStream.pipe(reloadWriteStream);
+  //   addProgress('Adding Reload Client Script');
+  // }
 })();
 
 const writeHtmlAndReload = () => {
@@ -160,6 +163,3 @@ const reload = () => {
     client.terminate();
   });
 };
-// const server = http.createServer((request, response) => {
-//   return handler(request, response, { public: quickmdPath });
-// });
