@@ -13,10 +13,17 @@ const express = require('express');
 const argv = require('yargs').command('$0 [file]', 'run qmd', yargs => {
   yargs
     .positional('file', { type: 'string', description: 'file to transpile' })
-    .option('watch', {
-      alias: 'w',
-      description: 'watch files',
-      type: 'string'
+    .options({
+      watch: {
+        alias: 'w',
+        description: 'watch files',
+        type: 'string'
+      },
+      ask: {
+        alias: 'a',
+        description: 'ask before clearing contents of directory',
+        type: 'string'
+      }
     });
 }).argv;
 const fileToRead = argv.file;
@@ -74,12 +81,16 @@ const handleFileReplacementAnswer = answer => {
 };
 
 if (fs.existsSync(quickmdPath) && fs.lstatSync(quickmdPath).isDirectory()) {
-  const ans = rl.question(
-    chalk.blue(
-      `❓ The directory ${quickmdPath} already exists,\n❓ Would you like to replace it? (Y/N) => `
-    )
-  );
-  handleFileReplacementAnswer(ans);
+  if (argv.ask != null) {
+    const ans = rl.question(
+      chalk.blue(
+        `❓ The directory ${quickmdPath} already exists,\n❓ Would you like to replace it? (Y/N) => `
+      )
+    );
+    handleFileReplacementAnswer(ans);
+  } else {
+    handleFileReplacementAnswer('Y');
+  }
 }
 
 const handleInvalidFileReplacementAnswer = () => {
